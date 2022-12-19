@@ -1,0 +1,60 @@
+
+## version        of docker-compose.yml file
+## services       is the containers that will be created
+### build         to build a image from a Dockerfile
+#### context      to specify the path of the Dockerfile
+#### dockerfile   to specify the name of the Dockerfile
+### image         to download a image from docker hub which is forbidden in this project or to use a custom image
+### ports         to expose the port of the container to the host
+### volumes       to mount a volume from the host to the container
+
+
+
+##############
+#   Example  #
+##############
+# version: '3.8'
+# services:
+#   nginx:
+#     image: nginx:stable-alpine
+#     ports:
+#       - 80:80
+#     volumes:
+#       - ./requirements/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+
+
+# 3.8 is the last version that support 19.03.0+ Docker Engine
+# see here for more details: https://docs.docker.com/compose/compose-file/compose-versioning/
+version: '3.8'
+
+##########################
+# scaffolding Containers #
+##########################
+# services are the containers that will be created
+services:
+  nginx:
+  #   image to download a image from docker hub
+  #   image: nginx:stable-alpine
+    image: nginx:stable-alpine
+    ports:
+      - 80:80
+    # first path local machine, second path container
+    volumes:
+      - ./requirements/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+      - ./wordpress:/var/www/html:delegated
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+  php:
+    build: 
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    volumes:
+      - ./wordpress:/var/www/html:delegated
+   
+  

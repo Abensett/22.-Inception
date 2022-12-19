@@ -1,0 +1,7 @@
+
+# FROM          is to d the base image for the container
+# RUN           is to execute a command in the container
+
+FROM php:7.4-fpm-alpine
+
+RUN docker-php-ext-install pdo pdo_mysql && docker-php-ext-enable pdo_mysql
