@@ -29,4 +29,4 @@
 
 
 
-## More info in my Obsidian Vault
+## All documentation in my Obsidian Vault
