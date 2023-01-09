@@ -9,8 +9,8 @@
  - [ ]  WordPress _(avec php-fpm configuré)_
  - [ ]  MARIADB _(sans NGINX)_
 ### Deux **volumes** disponibles à partir du dossier `` /home/ <login> /data ``:
- - [ ]  Volume contenant votre **base de données WordPress**
- - [ ] Volume contenant les **fichiers** de votre **site WordPress**
+ - [ ] Volume  **BBD WordPress**
+ - [ ] Volume **WordsPress Website Files**
 ### Mettre en place :
  - [ ] Un [_**docker-network**_](https://docs.docker.com/engine/reference/commandline/network/) qui fera le lien entre vos containers.
 ### Les utilisateurs à créer dans notre base de données WordPress:
@@ -29,4 +29,4 @@
 
 
 
-## More info in my Obsidian Vault
+## All documentation in my Obsidian Vault
