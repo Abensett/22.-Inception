@@ -15,6 +15,10 @@ NAME = Inception
 
 all: fclean reload
 
+create_local_directories:
+	mkdir -p ${HOME_PATH}/data/mariadb\
+			${HOME_PATH}/data/wordpress\
+
 linux:
 	@ echo "127.0.0.1 abensett.42.fr" >> /etc/hosts
 	
