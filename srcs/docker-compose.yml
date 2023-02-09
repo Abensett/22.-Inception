@@ -41,42 +41,43 @@ version: '3.8'
 # scaffolding Containers #
 ##########################
 # services are the containers that will be created
+# services are the containers that will be created
 services:
 
   mariadb:
     image:          mariadb                        # can be removed if build present
-    container_name: mariadb            
+    container_name: mariadb
     build:
-      context:      requirements/mariadb    
-      dockerfile:   Dockerfile  
+      context:      requirements/mariadb
+      dockerfile:   Dockerfile
 
-    volumes:                          
-      - mariadb:/var/lib/mysql
-    env_file: .env  
+    volumes:
+      -  mariadb:/var/lib/mysql
+    env_file: .env
 
-    networks: 
+    networks:
       - inception
     expose:
-      - 3306    
-                      
-    restart: on-failure                
-                                  
+      - "3306"
+
+    restart: on-failure
+
   wordpress:
     image:          wordpress
     container_name: wordpress
-    build: 
+    build:
       context:      requirements/wordpress
       dockerfile:   Dockerfile
-    
+
     volumes:
     - wordpress:/var/www/wordpress
     env_file: .env
 
     networks:
       - inception
-    depends_on:                            
+    depends_on:
       - mariadb
-    expose: 
+    expose:
       - "9000"
 
     restart: on-failure
@@ -84,41 +85,39 @@ services:
 
   nginx:
     image:          nginx
-    container_name: nginx            
+    container_name: nginx
     build:
-      context:      requirements/mariadb    
-      dockerfile:   Dockerfile  
+      context:      requirements/nginx
+      dockerfile:   Dockerfile
 
-    volumes:                          
+    volumes:
       - wordpress:/var/www/wordpress
-    env_file: .env  
-    
-    networks: 
-      - inception 
-    depends_on:                  
-      - wordpress                 
+    env_file: .env
+
+    networks:
+      - inception
+    depends_on:
+      - wordpress
     ports:
       - "443:443"
 
-    restart: on-failure   
+    restart: on-failure
 
 
 volumes:
   wordpress:
-      driver: local                               # storage driver
+      driver: local                                    # storage driver
       driver_opts:
-        type: 'none'                              # type of volume
-        o: 'bind'                                 # bind the volume to the host
-        device: '/Users/Abou/Desktop/Inception/wp'     # path to the folder on the host
+        type: 'none'                                     # type of volume
+        o: 'bind'                                      # bind the volume to the host
+        device: './data/wordpress'     # path to the folder on the host
   mariadb:
       driver: local
       driver_opts:
         type: 'none'
         o: 'bind'
-        device: '/Users/Abou/Desktop/Inception/mariadb'
-
-
+        device: './data/mariadb'
 
 networks:
     inception:          # name of the network, driver can be bridge, host, none
-      driver: bridge    # communication between containers
+      driver: bridge    # communication between container

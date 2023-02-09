@@ -1,0 +1,115 @@
+
+## version        of docker-compose.yml file
+## services       is the containers that will be created
+
+### container_name to specify the name of the container
+### image         to download a image from docker hub which is forbidden in this project or to use a custom image
+### build         to build a image from a Dockerfile
+#### context      to specify the path of the Dockerfile
+#### dockerfile   to specify the name of the Dockerfile
+
+### volumes       to mount a volume from the host to the container
+### networks      to specify the network of the container (bridge, host, none)
+### depends on    to specify the dependencies of the container (which container must be created before this one)
+
+### env_file      to specify the path of the .env file
+### ports         to expose the port of the container to the host
+### expose        to expose the port of the container to the other containers
+
+
+## volumes        are the volumes that will be created for DATA PERSISTENCE
+## networks       are the network that will be created
+
+##############
+#   Example  #
+##############
+# version: '3.8'
+# services:
+#   nginx:
+#     image: nginx:stable-alpine
+#     ports:
+#       - 80:80
+#     volumes:
+#       - ./requirements/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+
+
+# 3.8 is the last version that support 19.03.0+ Docker Engine
+# see here for more details: https://docs.docker.com/compose/compose-file/compose-versioning/
+version: '3.8'
+
+##########################
+# scaffolding Containers #
+##########################
+# services are the containers that will be created
+# services are the containers that will be created
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb            # Le nom du container
+    volumes:                           # volumes : stockercertains dossier en local au cas ou 
+      - mariadb:/var/lib/mysql
+    networks:                          # à quel network il appartient
+      - inception
+    build:
+      context: requirements/mariadb    # ou se trouve son Dockerfile
+      dockerfile: Dockerfile           # le nom du Dockerfile ?!
+    env_file: .env                     # le fichier d'environnement pour transmettre les variables
+    restart: on-failure                # "on-failure", container will be restarted 
+    expose:
+      - "3306"
+
+  nginx:           # with TLSv.1.2
+    image: nginx
+    container_name: nginx # name of the container
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    depends_on:                       # indique de ne pas démarrer Nginx tant que WP n'a pas démarré
+      - wordpress
+    build: 
+      context: requirements/nginx
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "443:443"                   # port qui sera exposé à la machine locale
+    restart: on-failure
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    env_file: .env
+    volumes:
+    - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    build: 
+      context: requirements/wordpress
+      dockerfile: Dockerfile
+    depends_on:                            # WP démarrera après MariaDB (sinon il ne pourra pas configurer la base de données)
+      - mariadb
+    restart: on-failure
+    expose: 
+      - "9000"
+
+
+## VOLUME CHECK
+
+volumes:                                   # stocke le volume en local
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'                          # aucun type spécifique
+      o: 'bind'
+      device: './data/wordpress'
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'                           # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
+      device: './data/mariadb'    #Ou stocker le dossier sur votre ordinateur en local
+
+#network part
+networks:
+    inception:
+      driver: bridge                       # indique a docker d'installer automatiquement les regles qui permettront au 3 containers de communiquer
