@@ -40,7 +40,7 @@ RUN mkdir -p /etc/nginx/ssl /var/www/wordpress
 RUN  openssl req -x509  -nodes \
     -out /etc/ssl/certs/inception.crt\
     -keyout /etc/ssl//private/inception.key\
-    -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=abensett" && \
+    -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=abensett" && \
     chmod 0600 /etc/ssl/private/inception.key /etc/ssl/certs/inception.crt;
 
 # create the folder for the nginx configuration
