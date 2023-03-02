@@ -17,7 +17,7 @@ CLEAR		= \033[2K\r
 # **************************************************************************** #
 
 PROJECT_NAME		   = Inception
-HOME_PATH  			   = "./data"
+HOME_PATH  			   = "./srcs/data"
 DOCKER_COMPOSE_PATH    = "./srcs/docker-compose.yml"
 DOCKER_COMPOSE_CMD     = docker-compose -f $(DOCKER_COMPOSE_PATH)
 
@@ -26,7 +26,7 @@ NAME = Inception
 all: create_local_directories  reload
 
 create_local_directories:
-			mkdir -p data \
+			mkdir -p ${HOME_PATH} \
 			${HOME_PATH}/mariadb\
 			${HOME_PATH}/wordpress\
 
