@@ -104,19 +104,42 @@ services:
     restart: on-failure
 
 
+
+  adminer:
+    image:          adminer:latest
+    container_name: adminer
+    # build:
+    #   context:      requirements/bonus/adminer
+    #   dockerfile:   Dockerfile
+    volumes:
+      - wordpress:/var/www/wordpress
+    environment:
+            ADMINER_DEFAULT_SERVER: mariadb
+            ADMINER_DESIGN: galkaev
+
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    ports:
+      - "8080:8080"
+
+    restart: on-failure
+
+
 volumes:
   wordpress:
       driver: local                                    # storage driver
       driver_opts:
         type: 'none'                                     # type of volume
         o: 'bind'                                      # bind the volume to the host
-        device: './data/wordpress'     # path to the folder on the host
+        device: './srcs/data/wordpress'     # path to the folder on the host
   mariadb:
       driver: local
       driver_opts:
         type: 'none'
         o: 'bind'
-        device: './data/mariadb'
+        device: './srcs/data/mariadb'
 
 networks:
     inception:          # name of the network, driver can be bridge, host, none
