@@ -11,21 +11,21 @@ Ce projet a pour but d’approfondir vos connaissances en vous faisant utiliser 
 ## Requirements
 >  Each docker must have its own ```Dockerfile```, those files are called by a ```docker-compose.yml``` in a ```Makefile```.  
 ### Les différents containers à mettre en place :
- - [ ] NGINX _(avec TLS v1.2)_
- - [ ]  WordPress _(avec php-fpm configuré)_
- - [ ]  MARIADB _(sans NGINX)_
+ - [x] NGINX _(avec TLS v1.2)_
+ - [x]  WordPress _(avec php-fpm configuré)_
+ - [x]  MARIADB _(sans NGINX)_
 ### Deux **volumes** disponibles à partir du dossier `` /home/ <login> /data ``:
- - [ ] Volume  **BBD WordPress**
- - [ ] Volume **WordsPress Website Files**
+ - [x] Volume  **BBD WordPress**
+ - [x] Volume **WordsPress Website Files**
 ### Mettre en place :
- - [ ] Un [_**docker-network**_](https://docs.docker.com/engine/reference/commandline/network/) qui fera le lien entre vos containers.
+ - [x] Un [_**docker-network**_](https://docs.docker.com/engine/reference/commandline/network/) qui fera le lien entre vos containers.
 ### Les utilisateurs à créer dans notre base de données WordPress:
- - [ ] utilisateur **Admin** ( no admin as pseudo)
- - [ ] utilisateur standard
+ - [x] utilisateur **Admin** ( no admin as pseudo)
+ - [x] utilisateur standard
 ### Nom de domaines:
- - [ ] login.42.fr
+ - [x] login.42.fr
 ### Règles complémentaires
- - [ ] variable d'environnements obligatoires (fichier .env)
- - [ ] latest tag forbidden
- - [ ] Nginx seul point d'entrée
+ - [x] variable d'environnements obligatoires (fichier .env)
+ - [x] latest tag forbidden
+ - [x] Nginx seul point d'entrée
  
