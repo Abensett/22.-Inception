@@ -57,6 +57,8 @@ RUN chmod 755 /var/www/html
 RUN adduser -D -g 'www' www &&\
     chown -R www:www /var/www/html /var/www/wordpress
 
+# EXPOSE  is to expose a port but to map it to the host, you need to use the -p option
+# it is not mandatory to expose the port but it is a good practice
 EXPOSE 443
 
 # This launches NGINX 

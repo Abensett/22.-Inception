@@ -42,6 +42,13 @@ mariadb:
 wordpress:
 	@ $(DOCKER_COMPOSE_CMD) exec wordpress bash
 
+adminer:
+	@ $(DOCKER_COMPOSE_CMD) exec  adminer sh
+redis:
+	@ $(DOCKER_COMPOSE_CMD) exec  redis sh
+ftp:
+	@ $(DOCKER_COMPOSE_CMD) exec  ftp sh
+
 logs:
 	@ $(DOCKER_COMPOSE_CMD) logs -f --tail=5
 

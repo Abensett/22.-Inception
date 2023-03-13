@@ -1,18 +1,29 @@
-# This time I use debian, see nginx for alpine image
-
 FROM debian:buster
 
-# Install mariadb
-RUN apt update && \
-    apt upgrade -y && \
-    apt install -y mariadb-server
+# Set environment variables
+ENV ADMINER_VERSION=4.8.1 \
+    DB_PORT=3306
 
-# Copy config files from host to container
-COPY ./conf/mariadb_personnal.cnf     /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY ./tools/mariadb_auto_config.sh	/
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    wget \
+    ca-certificates \
+    php \
+    php-mysql \
+    php-mbstring
 
-# execute script to install and configure mariadb
-ENTRYPOINT ["bash", "mariadb_auto_config.sh"]
+# Download and install Adminer
+RUN mkdir /adminer && \
+    wget https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php -O /adminer/index.php
 
-# Expose port 3306 only port allowed
-EXPOSE 3306
+# Set the working directory to /adminer
+WORKDIR /adminer
+
+# Expose port 8080
+EXPOSE 8080
+
+# Start PHP server with Adminer
+# -S is used to start a web server
+# "0.0.0.0:8080" is the address and port to listen on
+# "index.php" is the file to serve
+CMD ["php", "-S", "0.0.0.0:8080", "index.php"]
