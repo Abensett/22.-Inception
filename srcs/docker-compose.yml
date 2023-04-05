@@ -92,18 +92,21 @@ services:
 
     volumes:
       - wordpress:/var/www/wordpress
+      - static:/var/www/static
+
     env_file: .env
 
     networks:
       - inception
     depends_on:
       - wordpress
+      - adminer
+      - redis
+
     ports:
       - "443:443"
 
     restart: on-failure
-
-
 
   adminer:
     image:          adminer
@@ -119,9 +122,8 @@ services:
       - inception
     depends_on:
       - mariadb
-    ports:
-      - "8080:8080"
-
+    expose:
+      - "8080"
     restart: on-failure
 
   ftp:
@@ -131,10 +133,8 @@ services:
       context:      requirements/bonus/ftp
       dockerfile:   Dockerfile
     volumes:
-      - wordpress:/var/www/html
-    environment:
-      FTP_USR: ${FTP_USR}
-      FTP_PWD: ${FTP_PWD}
+      - wordpress:/var/www/wordpress
+    env_file: .env
 
     networks:
       - inception
@@ -142,26 +142,86 @@ services:
       - mariadb
     ports:
       - "21:21"
-      - "20:20"
-      - "21100-21110:21100-21110"
-
+      - "10000-10100:10000-10100" # range of ports for passive mode
 
     restart: on-failure
+
+  redis:
+    image: redis
+    container_name: redis
+    build: 
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+
+    volumes:
+      - wordpress:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    expose:
+      - "6379"
+
+    restart: on-failure
+
+
+  static:
+    image:         static
+    container_name: static
+    build: requirements/bonus/static
+
+    volumes:
+      - static:/var/www/static
+    networks:
+      - inception
+    depends_on:
+      - nginx
+    expose:
+      - "5000"
+
+    restart: on-failure
+
+  # cadvisor:
+  #   image:          cadvisor
+  #   container_name: cadvisor
+  #   build:
+  #     context:      requirements/bonus/cadvisor
+  #     dockerfile:   Dockerfile
+
+  #   volumes: 
+  #      - /:/rootfs:ro
+  #      - /var/run:/var/run:ro 
+  #      - /sys:/sys:ro 
+  #      - /var/lib/docker/:/var/lib/docker:ro
+       
+  #   networks:
+  #     - inception
+  #   ports:
+  #     - "9090:8080"
+  #   restart: on-failure
 
 
 volumes:
   wordpress:
       driver: local                                    # storage driver
       driver_opts:
-        type: 'none'                                     # type of volume
+        type: 'none'                                   # type of volume
         o: 'bind'                                      # bind the volume to the host
-        device: './srcs/data/wordpress'     # path to the folder on the host
+        device: './data/wordpress'                     # path to the folder on the host
   mariadb:
       driver: local
       driver_opts:
         type: 'none'
         o: 'bind'
-        device: './srcs/data/mariadb'
+        device: './data/mariadb'
+  static:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: 'bind'
+        device: './data/static'
 
 networks:
     inception:          # name of the network, driver can be bridge, host, none

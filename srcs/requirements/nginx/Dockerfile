@@ -27,7 +27,7 @@ RUN  apk update && \
     apk add --no-cache nginx openssl
 
 # Create the folder for the ssl certificate and the wordpress folder
-RUN mkdir -p /etc/nginx/ssl /var/www/wordpress
+RUN mkdir -p /etc/nginx/ssl /var/www/wordpress /var/www/static
 
 
 # KEY and CERTIFICATE are generated with openssl
@@ -44,18 +44,17 @@ RUN  openssl req -x509  -nodes \
     chmod 0600 /etc/ssl/private/inception.key /etc/ssl/certs/inception.crt;
 
 # create the folder for the nginx configuration
-RUN  mkdir -p /var/run/nginx
+RUN  mkdir -p /var/run/nginx 
 
 # copy the nginx configuration file from the host to the container
 COPY ./conf/nginx.conf /etc/nginx/http.d/ 
-COPY ./tools/index.html /var/www/html/
  
 
 # allow nginx to write in the folder ROOT it is safer to do it after the copy
-RUN chmod 755 /var/www/html
+RUN chmod 755 /var/www/static 
 # change the owner of folders to www-data (nginx user) PRINCIPAL USER
 RUN adduser -D -g 'www' www &&\
-    chown -R www:www /var/www/html /var/www/wordpress
+    chown -R www:www /var/www/static /var/www/wordpress
 
 # EXPOSE  is to expose a port but to map it to the host, you need to use the -p option
 # it is not mandatory to expose the port but it is a good practice
@@ -64,5 +63,5 @@ EXPOSE 443
 # This launches NGINX 
 # -g is for global directives
 # daemon off; is to run nginx in the foreground DISK AND EXECUTION MONITORE
-# they gotta be stoped with systemctl stop nginx or service nginx stop (depending on the os)
+# they gotta be stopped with systemctl stop nginx or service nginx stop (depending on the os)
 CMD [ "nginx", "-g", "daemon off;" ]

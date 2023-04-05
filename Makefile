@@ -16,22 +16,23 @@ CLEAR		= \033[2K\r
 #                               PROJECT VARIABLES                              #
 # **************************************************************************** #
 
-PROJECT_NAME		   = Inception
-HOME_PATH  			   = "./srcs/data"
-DOCKER_COMPOSE_PATH    = "./srcs/docker-compose.yml"
-DOCKER_COMPOSE_CMD     = docker-compose -f $(DOCKER_COMPOSE_PATH)
-
+PROJECT_NAME		 		 = Inception
+HOME_PATH  			 		 = ./srcs/data
+DOCKER_COMPOSE_PATH   		 = ./srcs/docker-compose.yml
+DOCKER_COMPOSE_CMD   		 = docker-compose -f $(DOCKER_COMPOSE_PATH)
 NAME = Inception
 
 all: create_local_directories  reload
 
 create_local_directories:
-			mkdir -p ${HOME_PATH} \
-			${HOME_PATH}/mariadb\
+			@mkdir -p ${HOME_PATH} \
+			${HOME_PATH}/mariadb \
 			${HOME_PATH}/wordpress\
+			${HOME_PATH}/static \
 
 reload:
 	@ $(DOCKER_COMPOSE_CMD) up -d --build
+
 
 nginx:
 	@ $(DOCKER_COMPOSE_CMD) exec nginx sh
@@ -48,6 +49,8 @@ redis:
 	@ $(DOCKER_COMPOSE_CMD) exec  redis sh
 ftp:
 	@ $(DOCKER_COMPOSE_CMD) exec  ftp sh
+static:
+	@ $(DOCKER_COMPOSE_CMD) exec  static sh
 
 logs:
 	@ $(DOCKER_COMPOSE_CMD) logs -f --tail=5
@@ -62,7 +65,7 @@ clean: stop
 	@ docker compose -f $(DOCKER_COMPOSE_PATH) down -v
 
 fclean: clean
-	@ rm -rf ${HOME_PATH}/Inception
+	@ rm -rf ${HOME_PATH}
 	@ docker system prune -af
 
 re: fclean all
