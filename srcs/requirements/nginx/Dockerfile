@@ -13,17 +13,17 @@
 
 
 # alpine is a lightweight linux distribution
-FROM alpine:3.17
+FROM alpine:3.16
 
 # apk       is the package manager for alpine
 # update    is to update the index of packages
 # upgrade   is upgrade already installed packages
 # add       is to install a package
 
-# No cache allows to not cache the index locally, which is useful for keeping containers small. 
+# No cache allows to not cache the index locally, which is useful for keeping containers small.
 # Avoids the use --update-cache and remove /var/cache/apk/* when done installing packages.
 RUN  apk update && \
-    apk upgrade && \ 
+    apk upgrade && \
     apk add --no-cache nginx openssl
 
 # Create the folder for the ssl certificate and the wordpress folder
@@ -33,8 +33,8 @@ RUN mkdir -p /etc/nginx/ssl /var/www/wordpress /var/www/static
 # KEY and CERTIFICATE are generated with openssl
 # Create the ssl certificate -x509 is the type of certificate
 # -nodes is to not encrypt the key (cause we can't enter a password in the dockerfile)
-# -out is the output file for the certificate  
-# -keyout is the key output file 
+# -out is the output file for the certificate
+# -keyout is the key output file
 # -subj is the subject of the certificate  C = Country, ST = State, L = Locality, O = Organization, OU = Organizational Unit, CN = Common Name
 # chmod 0600 is to change the permission of the key and the certificate to 600 (only the owner can read and write)
 RUN  openssl req -x509  -nodes \
@@ -44,14 +44,14 @@ RUN  openssl req -x509  -nodes \
     chmod 0600 /etc/ssl/private/inception.key /etc/ssl/certs/inception.crt;
 
 # create the folder for the nginx configuration
-RUN  mkdir -p /var/run/nginx 
+RUN  mkdir -p /var/run/nginx
 
 # copy the nginx configuration file from the host to the container
-COPY ./conf/nginx.conf /etc/nginx/http.d/ 
- 
+COPY ./conf/nginx.conf /etc/nginx/http.d/
+
 
 # allow nginx to write in the folder ROOT it is safer to do it after the copy
-RUN chmod 755 /var/www/static 
+RUN chmod 755 /var/www/static
 # change the owner of folders to www-data (nginx user) PRINCIPAL USER
 RUN adduser -D -g 'www' www &&\
     chown -R www:www /var/www/static /var/www/wordpress
@@ -60,7 +60,7 @@ RUN adduser -D -g 'www' www &&\
 # it is not mandatory to expose the port but it is a good practice
 EXPOSE 443
 
-# This launches NGINX 
+# This launches NGINX
 # -g is for global directives
 # daemon off; is to run nginx in the foreground DISK AND EXECUTION MONITORE
 # they gotta be stopped with systemctl stop nginx or service nginx stop (depending on the os)

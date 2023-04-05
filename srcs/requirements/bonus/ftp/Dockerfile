@@ -1,7 +1,7 @@
-FROM alpine:3.17
+FROM alpine:3.16
 
 RUN  apk update &&\
-     apk upgrade && \ 
+     apk upgrade && \
      apk --no-cache add vsftpd
 
 COPY conf/vsftpd.conf /etc/vsftpd/vsftpd.conf

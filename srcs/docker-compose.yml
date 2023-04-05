@@ -41,7 +41,6 @@ version: '3.8'
 # scaffolding Containers #
 ##########################
 # services are the containers that will be created
-# services are the containers that will be created
 services:
 
   mariadb:
