@@ -17,7 +17,7 @@ CLEAR		= \033[2K\r
 # **************************************************************************** #
 
 PROJECT_NAME		 		 = Inception
-HOME_PATH  			 		 = ./srcs/data
+HOME_PATH  			 		 = /home/abensett/data
 DOCKER_COMPOSE_PATH   		 = ./srcs/docker-compose.yml
 DOCKER_COMPOSE_CMD   		 = docker-compose -f $(DOCKER_COMPOSE_PATH)
 NAME = Inception

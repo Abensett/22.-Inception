@@ -149,7 +149,7 @@ services:
   redis:
     image: redis
     container_name: redis
-    build: 
+    build:
       context: ./requirements/bonus/redis
       dockerfile: Dockerfile
 
@@ -183,24 +183,24 @@ services:
 
     restart: on-failure
 
-  # cadvisor:
-  #   image:          cadvisor
-  #   container_name: cadvisor
-  #   build:
-  #     context:      requirements/bonus/cadvisor
-  #     dockerfile:   Dockerfile
+  cadvisor:
+    image:          cadvisor
+    container_name: cadvisor
+    build:
+      context:      requirements/bonus/cadvisor
+      dockerfile:   Dockerfile
 
-  #   volumes: 
-  #      - /:/rootfs:ro
-  #      - /var/run:/var/run:ro 
-  #      - /sys:/sys:ro 
-  #      - /var/lib/docker/:/var/lib/docker:ro
-       
-  #   networks:
-  #     - inception
-  #   ports:
-  #     - "9090:8080"
-  #   restart: on-failure
+    volumes:
+       - /:/rootfs:ro
+       - /var/run:/var/run:ro
+       - /sys:/sys:ro
+       - /var/lib/docker/:/var/lib/docker:ro
+
+    networks:
+      - inception
+    ports:
+      - "9090:8080"
+    restart: on-failure
 
 
 volumes:
@@ -209,19 +209,19 @@ volumes:
       driver_opts:
         type: 'none'                                   # type of volume
         o: 'bind'                                      # bind the volume to the host
-        device: './data/wordpress'                     # path to the folder on the host
+        device: '/home/abensett/data/wordpress'                     # path to the folder on the host
   mariadb:
       driver: local
       driver_opts:
         type: 'none'
         o: 'bind'
-        device: './data/mariadb'
+        device: '/home/abensett/data/mariadb'
   static:
       driver: local
       driver_opts:
         type: 'none'
         o: 'bind'
-        device: './data/static'
+        device: '/home/abensett/data/static'
 
 networks:
     inception:          # name of the network, driver can be bridge, host, none
