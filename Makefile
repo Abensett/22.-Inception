@@ -25,7 +25,7 @@ NAME = Inception
 all: create_local_directories  reload
 
 create_local_directories:
-			@mkdir -p ${HOME_PATH} \
+			@sudo mkdir -p ${HOME_PATH} \
 			${HOME_PATH}/mariadb \
 			${HOME_PATH}/wordpress\
 			${HOME_PATH}/static \
@@ -56,7 +56,7 @@ logs:
 	@ $(DOCKER_COMPOSE_CMD) logs -f --tail=5
 
 linux:
-	@ echo "127.0.0.1 abensett.42.fr" >> /etc/hosts
+	@ sudo echo "127.0.0.1 abensett.42.fr" >> /etc/hosts
 
 stop:
 	@ docker compose -f  $(DOCKER_COMPOSE_PATH) stop
