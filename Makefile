@@ -4,7 +4,7 @@
 
 
 GREEN		= \033[32;1m
-RED			= \033[31;1m
+RED		= \033[31;1m
 YELLOW		= \033[33;1m
 CYAN		= \033[36;1m
 RESET		= \033[0m
