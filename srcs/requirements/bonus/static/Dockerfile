@@ -13,7 +13,7 @@ ENV FLASK_RUN_PORT=5000
 RUN mkdir -p /var/www/static
 
 COPY ./tools ./myapp
-ADD ./tools/templates /var/www/static/portfolio
+ADD ./tools /var/www/static/portfolio
 
 EXPOSE 5000
 
