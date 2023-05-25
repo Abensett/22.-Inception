@@ -27,7 +27,6 @@ Ce projet a pour but d’approfondir vos connaissances en vous faisant utiliser 
  - [x] latest tag forbidden
  - [x] Nginx seul point d'entrée
  
- 
 ## Bonus Services
  - [x] Ftp
  - [x] Redis Cache
@@ -36,3 +35,31 @@ Ce projet a pour but d’approfondir vos connaissances en vous faisant utiliser 
  - [x] Cadvisor
 
 ## 42 Project 125/100
+
+## Ressources 
+ - Installer
+      - [Installation Docker Desktop](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+      - [Openclassroom](https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211458-lancez-votre-premier-conteneur-en-local)
+      - [Bien comprendre et maîtriser Docker ! avec videos](https://datascientest.com/docker-guide-complet)
+   - Linux container, base image
+      - [Docker Cgroup & Namespaces](https://bikramat.medium.com/namespace-vs-cgroup-60c832c6b8c8)
+      - [Alpine vs Debian + Image and Docker def](https://naiveskill.com/docker-base-image/)
+   - Alpine docker
+      - [Alpine docker use ](https://github.com/gliderlabs/docker-alpine/blob/master/docs/usage.md)
+      - [Containerizing nginx + PHP FPM on Alpine Linux](https://levelup.gitconnected.com/containerizing-nginx-php-fpm-on-alpine-linux-953430ea6dbc)
+   - NGINX
+      - [Ngninx Common Configuration Files](https://www.youtube.com/watch?v=MP3Wm9dtHSQ)
+      - [Nginx location](https://www.digitalocean.com/community/tutorials/nginx-location-directive)
+      - [Nginx Wordpress](https://www.nginx.com/resources/wiki/start/topics/recipes/wordpress/)
+   - SSL /  TLS
+      - [SSL C'est quoi ?](https://www.youtube.com/watch?v=7W7WPMX7arI)
+      - [Configure Self-Signed SSL For Nginx Docker From A Scratch](https://codingwithmanny.medium.com/configure-self-signed-ssl-for-nginx-docker-from-a-scratch-7c2bcd5478c6)
+      - [Dockerizing Wordpress with Nginx and PHP-FPM on Ubuntu](https://www.howtoforge.com/tutorial/dockerizing-wordpress-with-nginx-and-php-fpm/)
+   - Docker compose
+      - [Documentation docker-compose.ylm](https://docs.docker.com/compose/compose-file/compose-file-v3/#bridge)
+      - [ENTRYPOINT (cannot be otherwritten with CLI) vs CMD (can be overidden with CLI)](https://devtron.ai/blog/cmd-and-entrypoint-differences//)
+   - MariaDb
+      - [docker-compose.yml documentation](https://docs.docker.com/compose/compose-file/)
+      - [Liste éléments de correction](https://github.com/mharriso/school21-checklists/blob/master/ng_3_inception.pdf)
+   - FTP
+      - [How to install an FTP Server on Ubuntu 22.04 with VSFTPD - YouTube](https://www.youtube.com/watch?v=XNjOSY-wcb0&t=379s)
