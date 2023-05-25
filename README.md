@@ -29,3 +29,12 @@ Ce projet a pour but d’approfondir vos connaissances en vous faisant utiliser 
  - [x] latest tag forbidden
  - [x] Nginx seul point d'entrée
  
+ 
+## Bonus Services
+ - [x] Ftp
+ - [x] Redis Cache
+ - [x] Website Statique
+ - [x] Adminer
+ - [x] Cadvisor
+
+## 42 Project 125/100
