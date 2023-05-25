@@ -3,8 +3,6 @@ Ce projet a pour but d’approfondir vos connaissances en vous faisant utiliser 
 
 # Inception
 
-## Table of contents
-
 ## Scheme
 <img src="https://user-images.githubusercontent.com/85625233/194904961-6914bc5b-d72f-410a-9f20-eb2004fbd8bb.png" width="500"/> 
 
