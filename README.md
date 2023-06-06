@@ -3,7 +3,7 @@
 ## Table of contents
 * [Goal](#Goal)  
 * [Requirements](#Requirements)
-* [Ressources](#Ressources)
+* [Resources](#Resources)
 
 ## Goal
 This project aims to broaden one's knowledge of `system administration` by using `Docker`.
@@ -42,7 +42,7 @@ The goal is to virtualize several `Docker images`, creating them in a `virtual m
 
 ## 42 Project 125/100
 
-## Ressources 
+## Resources 
  - Installer
       - [Installation Docker Desktop](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
       - [Openclassroom](https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211458-lancez-votre-premier-conteneur-en-local)
